@@ -1,0 +1,31 @@
+@model Reservation
+<div class="jumbotron">
+    <h1>Wedding Planner</h1>
+    <h3>@ViewBag.getUser.FirstName @ViewBag.getUser.LastName</h3>
+    <h3>Make Reservation</h3>
+    <p><a href="/dashboard">Dashboard</a></p>
+</div>
+<form asp-action="Reserve" method="post">
+    @* <input style="hidden" asp-for="ReservationId" value="@Model.ReservationId"> *@
+    <div class="form-group">
+        <span asp-validation-for="GroomName"></span>
+        <label asp-for="GroomName">Groom</label>
+        <input asp-for="GroomName" class="form-control">
+    </div>
+    <div class="form-group">
+        <span asp-validation-for="BrideName"></span>
+        <label asp-for="BrideName">Bride</label>
+        <input asp-for="BrideName" class="form-control">
+    </div>
+    <div class="form-group">
+        <span asp-validation-for="Date"></span>
+        <label asp-for="Date"></label>
+        <input asp-for="Date" class="form-control">
+    </div>
+        <div class="form-group">
+        <span asp-validation-for="Address"></span>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control">
+    </div>
+    <input type="submit" value="Reserve" class="btn btn-primary">
+</form>

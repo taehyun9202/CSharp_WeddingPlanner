@@ -1,0 +1,54 @@
+@model List<Reservation>
+<div class="jumbotron">
+    <h1>Wedding Planner</h1>
+    <h3>@ViewBag.User.FirstName @ViewBag.User.LastName</h3>
+    <p><a href="/logout">Logout</a></p>
+</div>
+
+<a href="/reservation" class="btn btn-info">Create Plan</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Creator</th>
+            <th>Guests</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+        <tr>
+            <td><a href="/@r.ReservationId">@r.GroomName & @r.BrideName</a></td>
+            @if(r.Date > DateTime.Now)
+            {
+                <td>@r.Date</td>
+            }
+            else 
+            {
+                // if date pass, it will automatically delete(cancel) the event
+                int id = @r.ReservationId;
+                Context.Response.Redirect($"/cancel/{id}");
+            }
+            <td>Created by @r.Creator.FirstName</td>
+            <td>@r.Guests.Count</td>
+            @if(r.Creator.UserId == ViewBag.User.UserId)
+            {
+                <td><a href="/cancel/@r.ReservationId">Delete</a></td>
+            }
+            else
+            {
+                if( r.Guests.All(g => g.UserId != ViewBag.User.UserId))
+                {
+                    <td><a href="/attend/@r.ReservationId/@ViewBag.User.UserId">Attend</a></td>
+                }
+                else if( r.Guests.Any(g => g.UserId == ViewBag.User.UserId))
+                {
+                    <td><a href="/leave/@r.ReservationId/@ViewBag.User.UserId">Not Attend</a></td>
+                }
+            }
+        </tr>
+        }
+    </tbody>
+</table>

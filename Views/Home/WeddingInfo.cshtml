@@ -1,0 +1,24 @@
+@model List<Association>
+<div class="jumbotron">
+    <h1>@ViewBag.getOne.GroomName and @ViewBag.getOne.BrideName's Wedding</h1>
+    <p>@ViewBag.getOne.Date</p>
+    <p><a style="display:inline-block" href="/dashboard">Dashboard</a></p>
+    <p><a style="display:inline-block" href="/logout">Logout</a></p>
+</div>
+
+<div class="row">
+    <div class="col col-sm-6">
+        <h1>Guests: @Model.Count</h1>
+        
+        @foreach (var g in Model)
+        {
+            <p>@g.Guest.FirstName @g.Guest.LastName</p>
+        }
+    </div>
+    <div class="col col-sm-6">
+        <h1>Address</h1>
+        <p>@ViewBag.getOne.Address</p>
+        
+    </div>
+</div>
+
